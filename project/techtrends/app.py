@@ -3,11 +3,14 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
+openConnections=0
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
+    global openConnections
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    openConnections+=1
     return connection
 
 # Function to get a post using its ID
@@ -17,6 +20,13 @@ def get_post(post_id):
                         (post_id,)).fetchone()
     connection.close()
     return post
+
+# Function to get count of posts
+def getPostsCount():
+    connection = get_db_connection()
+    results = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
+    return len(results)
 
 # Define the Flask application
 app = Flask(__name__)
@@ -64,6 +74,32 @@ def create():
             return redirect(url_for('index'))
 
     return render_template('create.html')
+
+#Define health check
+@app.route('/healthz')
+def getHealthCheck():
+        message = {"result":"OK - healthy"}
+        response = app.response_class(
+                response=json.dumps(message),
+                status=200,
+                mimetype='application/json'
+                )
+        return response
+
+#Define metrics
+@app.route('/metrics')
+def getMetrics():
+    global openConnections
+    message = dict()
+    message["db_connection_count"] = openConnections
+    message["post_count"] = getPostsCount()
+    
+    response = app.response_class(
+            response=json.dumps(message),
+            status=200,
+            mimetype='application/json'
+            )
+    return response
 
 # start the application on port 3111
 if __name__ == "__main__":
