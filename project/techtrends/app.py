@@ -78,7 +78,7 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
-            print("New article \"" + title + "\" is created.")
+            logger.info("New article \"" + title + "\" is created.")
             return redirect(url_for('index'))
 
     return render_template('create.html')
