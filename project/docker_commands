@@ -1,11 +1,21 @@
 ## Docker commands used to build the application 
-# TODO: insert the docker build command
+docker image build -t techtrends .
 
 ## Docker commands used to run the application
-# TODO: insert the docker run command
+docker run -d -p 7111:3111 --name techtrends-container techtrends
 
 ## Docker commands used to get the application logs
-# TODO: insert the docker logs command
+docker logs techtrends-container
 
 ## Logs from the container running the TechTrends application
-# TODO: paste logs from the Docker container 
+#INFO 2021-11-30 23:01:24,269  * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
+#INFO 2021-11-30 23:01:26,992 172.17.0.1 - - [30/Nov/2021 23:01:26] "GET /create HTTP/1.1" 200 -
+#INFO 2021-11-30 23:01:45,343 New article "Kubernetes is the future" is created.
+#INFO 2021-11-30 23:01:45,347 172.17.0.1 - - [30/Nov/2021 23:01:45] "POST /create HTTP/1.1" 302 -
+#INFO 2021-11-30 23:01:45,391 172.17.0.1 - - [30/Nov/2021 23:01:45] "GET / HTTP/1.1" 200 -
+#INFO 2021-11-30 23:01:48,078 Article "2020 CNCF Annual Report" retrieved!
+#INFO 2021-11-30 23:01:48,092 172.17.0.1 - - [30/Nov/2021 23:01:48] "GET /1 HTTP/1.1" 200 -
+#INFO 2021-11-30 23:01:50,973 The "About Us" page is retrieved
+#INFO 2021-11-30 23:01:50,992 172.17.0.1 - - [30/Nov/2021 23:01:50] "GET /about HTTP/1.1" 200 -
+#INFO 2021-11-30 23:01:55,574 Article does not exist
+#INFO 2021-11-30 23:01:55,583 172.17.0.1 - - [30/Nov/2021 23:01:55] "GET /9 HTTP/1.1" 404 -
