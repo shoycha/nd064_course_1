@@ -28,7 +28,7 @@ jobs:
                         id: docker_build
                         uses: docker/build-push-action@v2
                         with:
-                                context: /project/techtrends/.
+                                context: nd064_course_1/project/techtrends/.
                                 platforms: linux/amd64,linux/arm64
                                 push: true
                                 tags: shoycha/techtrends:latest
